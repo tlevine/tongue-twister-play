@@ -31,14 +31,25 @@ def build_network():
     return network
 
 class QueryResult(dict):
+    def __init__(self, network, *args, **kwargs):
+        self.network = network
+        dict.__init__(self, *args, **kwargs)
     def __repr__(self):
-        return self['translation']
+        return repr(str(self))
+    def __str__(self):
+        return self['translation'].strip()
+    def links(self):
+        return list(query_network(self.network, self))
 
 def query_network(network, twister_original):
     stem_twisters, twisters_data = network
-    for linking_word in twisters_data[twister_original]['linking_words']:
+    if 'original' in twister_original:
+        original_str = twister_original['original']
+    else:
+        original_str = twister_original
+    for linking_word in twisters_data[original_str]['linking_words']:
         for twister in stem_twisters[linking_word]:
-            yield QueryResult(twisters_data[twister])
+            yield QueryResult(network, twisters_data[twister])
 
 def get_linking_words(twisters):
     counts = word_counts(twisters)
