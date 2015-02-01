@@ -11,7 +11,8 @@ def get_twisters():
         if translation != None:
             cleaned_translation = re.sub(r'\([^)]*\)', '', translation)
             stopwords = nltk.corpus.stopwords.words()
-            stems = [stem(word.lower()) for word in nltk.word_tokenize(cleaned_translation) if word not in stopwords]
+            stems_with_stops = (stem(word.lower()) for word in nltk.word_tokenize(cleaned_translation))
+            stems = filter(lambda stem: stem not in stopwords, stems_with_stops)
             yield language, original, translation, stems
 
 def build_network():
