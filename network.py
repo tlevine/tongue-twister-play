@@ -15,12 +15,12 @@ def get_twisters():
 
 def main():
     twisters = get_twisters()
-    scores = word_specialness_scores(twisters)
+    counts = word_counts(twisters)
 
 def dependencies():
     nltk.download('punkt')
 
-def word_specialness_scores(twisters):
+def word_counts(twisters):
     'Determine how special each of the different word stems are.'
     counts = Counter()
     for _, _, _, stems in twisters:
@@ -28,12 +28,13 @@ def word_specialness_scores(twisters):
     return counts
 
 def calibrate_scoring(counts):
-    remove_ones = filter(lambda pair: pair[1] > 1, scores.items())
+    remove_ones = filter(lambda pair: pair[1] > 1, counts.items())
     return sorted(remove_ones, key = lambda pair: pair[1])
 
-def score_twister(counts, twisters):
+def count_twister(counts, twisters):
+    pass
 
-
-#   scores[word]
+#   counts[word]
 twisters = get_twisters()
-scores = word_specialness_scores(twisters)
+counts = word_counts(twisters)
+sorted_counts = calibrate_scoring(counts)
