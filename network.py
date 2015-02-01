@@ -8,9 +8,10 @@ def get_twisters():
     stem = nltk.stem.PorterStemmer().stem
     for language, original, translation in twister():
         # Remove parantheses.
-        cleaned_translation = re.sub(r'\([^)]*\)', '', translation)
-        stems = list(map(stem, nltk.word_tokenize(cleaned_translation)))
-        yield language, original, translation, stems
+        if translation != None:
+            cleaned_translation = re.sub(r'\([^)]*\)', '', translation)
+            stems = list(map(stem, nltk.word_tokenize(cleaned_translation)))
+            yield language, original, translation, stems
 
 def main():
     twisters = get_twisters()
@@ -24,9 +25,13 @@ def word_specialness_scores(twisters):
     counts = Counter()
     for _, _, _, stems in twisters:
         counts.update(stems)
-        break
     return counts
 
+def calibrate_scoring(counts):
+    remove_ones = filter(lambda pair: pair[1] > 1, scores.items())
+    return sorted(remove_ones, key = lambda pair: pair[1])
+
+def score_twister(counts, twisters):
 
 
 #   scores[word]
