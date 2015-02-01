@@ -31,7 +31,9 @@ def build_network():
 
 def query_network(network, twister_original):
     stem_twisters, twisters_data = network
-    twisters_data[twister_original]['linking_words']
+    for linking_word in twisters_data[twister_original]['linking_words']:
+        for twister in stem_twisters[linking_word]:
+            yield twisters_data[twister]
 
 def get_linking_words(twisters):
     counts = word_counts(twisters)
