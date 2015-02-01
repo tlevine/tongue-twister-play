@@ -25,10 +25,7 @@ def word_specialness_scores(twisters):
     for _, _, _, stems in twisters:
         counts.update(stems)
         break
-    total_count = sum(counts.values())
-
-    return {k:v/total_count for k, v in counts.items()}
-
+    return counts
 
 
 
