@@ -12,7 +12,7 @@ def get_twisters():
             cleaned_translation = re.sub(r'\([^)]*\)', '', translation)
             stopwords = nltk.corpus.stopwords.words()
             stems_with_stops = (stem(word.lower()) for word in nltk.word_tokenize(cleaned_translation))
-            stems = filter(lambda stem: stem not in stopwords, stems_with_stops)
+            stems = list(filter(lambda stem: stem not in stopwords, stems_with_stops))
             yield language, original, translation, stems
 
 def build_network():
@@ -30,11 +30,15 @@ def build_network():
     network = stem_twisters, twisters_data
     return network
 
+class QueryResult(dict):
+    def __repr__(self):
+        return self['translation']
+
 def query_network(network, twister_original):
     stem_twisters, twisters_data = network
     for linking_word in twisters_data[twister_original]['linking_words']:
         for twister in stem_twisters[linking_word]:
-            yield twisters_data[twister]
+            yield QueryResult(twisters_data[twister])
 
 def get_linking_words(twisters):
     counts = word_counts(twisters)
