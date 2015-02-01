@@ -19,6 +19,7 @@ def main():
 
 def dependencies():
     nltk.download('punkt')
+    nltk.download('stopwords')
 
 def word_counts(twisters):
     'Determine how special each of the different word stems are.'
@@ -38,3 +39,4 @@ def count_twister(counts, twisters):
 twisters = get_twisters()
 counts = word_counts(twisters)
 sorted_counts = calibrate_scoring(counts)
+# nltk.corpus.stopwords.words
