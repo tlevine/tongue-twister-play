@@ -1,4 +1,5 @@
 from random import choice
+import os
 
 from vlermv import Vlermv
 
@@ -13,7 +14,7 @@ def q(thing = RANDOM, cache = {}):
     after the first run.
     '''
     if 'network' not in cache:
-        v = Vlermv('~/.tongue-twister-play')
+        v = Vlermv(os.path.expanduser('~/.tongue-twister-play'))
         if 'network' in v:
             cache['network'] = v['network']
         else:
