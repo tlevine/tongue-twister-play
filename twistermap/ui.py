@@ -25,9 +25,13 @@ def q(thing = RANDOM, cache = {}):
 
 def play():
     tongue_twisters = q()
+    tongue_twister = 1
+    prev_tongue_twister = -1
     for i in range(1000):
-        if len(tongue_twisters) == 0:
+        if len(tongue_twisters) < 2:
             break
-        tongue_twister = choice(tongue_twisters)
+        while prev_tongue_twister == tongue_twister:
+            tongue_twister = choice(tongue_twisters)
+        prev_tongue_twister = tongue_twister
         yield tongue_twister
         tongue_twisters = q(tongue_twister)
