@@ -25,8 +25,8 @@ def q(thing = RANDOM, cache = {}):
 
 def play():
     tongue_twisters = q()
-    tongue_twister = 1
-    prev_tongue_twister = -1
+    tongue_twister = None
+    prev_tongue_twister = None
     for i in range(1000):
         if len(tongue_twisters) < 2:
             break

@@ -9,4 +9,7 @@ Choose the next tongue twister. ::
 And continue. To generate a whole play, do this. ::
 
     for tongue_twister in play():
-        print('%s: %s' % (tongue_twister['language'], tongue_twister['original']))
+        args = (tongue_twister['translation'],
+                tongue_twister['language'],
+                tongue_twister['original'])
+        print('%s (%s: %s)' % args)
